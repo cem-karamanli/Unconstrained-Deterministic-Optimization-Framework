@@ -20,7 +20,7 @@ from pylab import *
 ### USER: CHANGE BELOW 
 
 config = {
-    #'path'           : 'Write your path here/',  # specify the path to the folder 
+    'path'           : 'Write your path here/',  # specify the path to the folder 
     # where the data for logistic regression problems are stored.
     'prob'           : "logReg",                # "logReg" or "rosenbrock" or "quad"
     'method'         : "SD",                    # "SD", "Newton", "BFGS_Bk", "BFGS_Hk", "LBFGS"
@@ -357,7 +357,18 @@ class Optimization():
         
         for i in range(self.num_of_iter):
             iterfunc()
-        semilogy(self.grad_norm_hist)
+        semilogy(self.grad_norm_hist,label = self.method)
+        if self.prob == "logReg":
+            title_add = "Logistic Regression," + self.dataset_name + " Dataset"
+        elif self.prob == "quad":
+            title_add = "Quadratic Problem," + " Kappa = " + str(self.kappa)
+        elif self.prob == "rosenbrock":
+            title_add = "Rosenbrock Problem," + " Dimension = " + str(self.d)
+        title_ = "Performance on " + title_add
+        title(title_)
+        xlabel('Iterations')
+        ylabel('Norm of the Gradient')
+        legend()
             
     def f(self,x):
         if self.prob == "logReg":
